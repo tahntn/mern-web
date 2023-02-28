@@ -1,0 +1,26 @@
+.app-list {
+    a{
+        font-size: 20px;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 500;
+        margin: 0 10px;
+        padding-bottom: 3px;
+        &:hover{
+            color: rgba(255, 0, 0, 1);
+        }
+    }
+}
+
+.app-list-menu {
+    a{
+        font-size: 20px;
+        font-family: "Fredoka", sans-serif;
+        font-weight: 300;
+        margin: 0 10px;
+   
+        &:hover{
+            color: rgba(255, 0, 0, 1);
+            border-color: black;
+        }
+    }
+}
