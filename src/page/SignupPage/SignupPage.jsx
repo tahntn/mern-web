@@ -1,133 +1,155 @@
 import React, { useEffect, useState } from "react";
-import { Button, Checkbox, Form, Input, message } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
-import ButtonComponent from "../../component/ButtonComponent/ButtonComponent";
-import { userLogin, userSignup } from "../../features/auth/authActions";
-import InputComponent from "../../component/InputComponent/InputComponent";
-import { setMessage } from "../../features/auth/authSlice";
-import  {success as MessSuccess} from "../../component/MessageComponent/MessageComponent";
-
+import { Col, Row } from "antd";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { success as MessSuccess,  error as MessError } from "../../component/MessageComponent/MessageComponent";
+import { useMutationHooks } from "../../hooks/useMutationHook";
+import * as UserService from "../../service/UserService";
+import * as Yup from "yup";
 const SignupPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const { loading, userInfo, error, success, message, status } = useSelector(
-    (state) => state.auth
-  );
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const handleClick = () => {
-    dispatch(userSignup({ email, password, confirmPassword }));
-  };
-  const handleOnchangeEmail = (e) => {
-
-    setEmail(e.target.value);
-  };
-  const handleOnchangePassword = (e) => {
-
-    setPassword(e.target.value);
-  };
-  const handleOnchangeConfirmPassword = (e) => {
-
-    setConfirmPassword(e.target.value);
-  };
+  const {state} = useLocation();
   
+  const initialValues = { email: "", password: "", confirmPassword: "" };
 
+  const mutation = useMutationHooks((data) => UserService.signupUser(data));
+  const { data, isSuccess, isError } = mutation;
+
+  
   useEffect(() => {
-    if (userInfo) {
-      navigate('/');
-    } else if (status === "SUCCESS") {
-      MessSuccess("Đăng ky thành công");
-      navigate('/login');
-      dispatch(setMessage());
+    if (isSuccess && data?.status !== "ERROR") {
+      MessSuccess("Đăng ký thành công");
+      navigate('/login', {state })
+    } else if (isSuccess && data?.status == "ERROR"){
+      MessError(data?.message)
     }
-  }, [navigate, userInfo, message])
+  }, [isSuccess, isError]);
+
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Email không hợp lệ")
+      .required("Email không được để trống"),
+    password: Yup.string().required("Mật khẩu không được để trống"),
+    confirmPassword: Yup.string().required("Mật khẩu không được để trống"),
+  });
+
+  const onSubmit = (values, { setSubmitting }) => {
+    mutation.mutate(values);
+    setSubmitting(false);
+  };
+ 
+
   return (
-    <div
-      className="bg-black"
-      style={{
-        width: "100%",
-        height: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <Row className="bg-gray-100 sm:min-h-screen xs:min-h-[65vh] items-center justify-center  ">
+    <Col
+      xl={8}
+      lg={14}
+      md={16}
+      sm={20}
+      xs={22}
+      className="  bg-white p-8 border-gray-300 shadow-lg rounded-md"
     >
-      <div className="flex flex-col items-center bg-white w-1/2 ">
-        <p className="text-2xl font-semibold my-10">Sign up</p>
-        <Form
-          name="basic"
-          labelCol={{ span: 8 }}
-          wrapperCol={{ span: 16 }}
-          style={{ width: 400 }}
-          initialValues={{ remember: true }}
-          autoComplete="off"
-        >
-          <Form.Item
-            label="Email"
-            name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
-          >
-            <InputComponent
-              style={{ marginBottom: "10px" }}
-              placeholder="abc@gmail.com"
-              value={email}
-              onChange={handleOnchangeEmail}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Password"
-            name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-            <InputComponent
-              placeholder="password"
-              type={password}
-              value={confirmPassword}
-              onChange={handleOnchangePassword}
-            />
-          </Form.Item>
-
-          <Form.Item
-            label="Confirm Password"
-            name="confirmPassword"
-            rules={[{ required: true, message: "Please input your password!" }]}
-          >
-           
-            <InputComponent
-              placeholder="confirm password"
-              type={password}
-              value={password}
-              onChange={handleOnchangeConfirmPassword}
-            />
-          </Form.Item>
-          {status === "SUCCESS" ? undefined : <p>{message}</p>}
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <span>Bạn đã là thành viên? </span>
-            <NavLink className="text-black  font-semibold" to="/login">
-              Đăng nhập
-            </NavLink>
-          </Form.Item>
-
-          <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-            <ButtonComponent
-              textButton="Đăng ký"
-              styleButton={{ width: "200px" }}
-              className=""
-              htmlType="submit"
-              onClick={handleClick}
-            />
-       
-          </Form.Item>
-         
-        </Form>
+      <div className="text-center mb-10">
+        <span className="lg:text-3xl sm:text-2xl xs:text-xl font-bold mb-4 ">
+          ĐĂNG KÝ
+        </span>
       </div>
-    </div>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+  
+      >
+        {({ isSubmitting }) => (
+          <Form>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="lg:text-xl sm:textlg xs:text-base block text-gray-700 font-bold mb-2"
+              >
+                Email
+              </label>
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                className="lg:text-lg sm:text-base xs:text-sm w-full border-gray-400 p-2 rounded-md "
+                style={{
+                  background: "rgb(232,240,254)",
+                }}
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className=" error-message lg:text-xl sm:textlg xs:text-base text-red-500 text-sm mt-1"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="password"
+                className="lg:text-xl sm:textlg xs:text-base block text-gray-700 font-bold mb-2"
+              >
+                Mật khẩu
+              </label>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+           
+                className="lg:text-lg sm:text-base xs:text-sm w-full border-gray-400 p-2 rounded-md"
+                style={{
+                  background: "rgb(232,240,254)",
+                }}
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className=" error-message lg:text-xl sm:textlg xs:text-base text-red-500 text-sm mt-1"
+              />
+            </div>
+            <div className="mb-4">
+              <label
+                htmlFor="confirmPassword"
+                className="lg:text-xl sm:textlg xs:text-base block text-gray-700 font-bold mb-2"
+              >
+                Nhập lại mật khẩu
+              </label>
+              <Field
+                type="confirmPassword"
+                id="confirmPassword"
+                name="confirmPassword"
+           
+                className="lg:text-lg sm:text-base xs:text-sm w-full border-gray-400 p-2 rounded-md"
+                style={{
+                  background: "rgb(232,240,254)",
+                }}
+              />
+              <ErrorMessage
+                name="confirmPassword"
+                component="div"
+                className=" error-message lg:text-xl sm:textlg xs:text-base text-red-500 text-sm mt-1"
+              />
+            </div>
+            <span className="lg:text-lg sm:text-base xs:text-sm text-gray-800 ">
+              Bạn chưa có tài khoản?{" "}
+              <a className="font-semibold text-black" onClick={() => navigate("/login",  {state })}>
+                Đăng nhập ngay
+              </a>
+            </span>
+            <br />
+            <button
+              type="submit"
+              className="bg-blue-500 text-white px-4 py-2 mt-8 rounded-md"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Đang đăng ký..." : "Đăng ký"}
+            </button>
+          </Form>
+        )}
+      </Formik>
+    </Col>
+  </Row>
   );
 };
 

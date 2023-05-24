@@ -1,13 +1,15 @@
 import React from 'react';
 import FooterComponent from '../FooterComponent/FooterComponent';
-import HeaderComponent from '../HeaderComponent/HeaderComponent';
+import DefaultHeaderComponent from '../DefaultHeaderComponent/DefaultHeaderComponent';
 
 const DefaultComponent = ({children}) => {
     return (
-        <div>
-            <HeaderComponent/>
+        <div className='relative'>
+             <DefaultHeaderComponent/>
+            {/* <BottomHeaderComponent/> */}
             {children}
             <FooterComponent/>
+          
         </div>
     );
 };

@@ -5,3 +5,53 @@ export const getBase64 = (file) =>
         reader.onload = () => resolve(reader.result);
         reader.onerror = (error) => reject(error);
     })
+
+
+    export const isJsonString = (data) => {
+        try {
+            JSON.parse(data)
+        } catch (error) {
+            return false
+        }
+        return true
+    }
+
+    export const convertPrice = (price) => {
+        try {
+            const result  = price?.toLocaleString();
+            return `${result} VND`
+        } catch (error) {
+            return null
+        }
+    }
+
+    
+    
+    export function getItem(label, key, icon, children, type) {
+        return {
+            key,
+            icon,
+            children,
+            label,
+            type,
+        };
+    }
+
+    export const renderOptions = (arr) => {
+        let results = []
+
+        if(arr) {
+            results = arr?.map((opt) => {
+                return {
+                    value: opt?.name,
+                    label: opt?.name
+                }
+            })
+        }
+        // results.push({
+        //     label: 'Thêm type',
+        //     value: 'add_type'
+        // })
+        return results
+    }
+    

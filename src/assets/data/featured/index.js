@@ -2,14 +2,14 @@ import img1 from "../../images/image1.png";
 import img2 from "../../images/image2.png";
 import img3 from "../../images/image3.png";
 import img4 from "../../images/image4.png";
-
+import img5 from "../../images/ao.png";
 export const featured = [
     {
         id: 1,
-        image: "https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/product/category-jackets-3-colour-bg-2.jpg",
-        text: "denim & parkas",
-        title: "Jackets",
-        path: "/",
+        image: img5,
+        text: "Diện mạo văn phòng",
+        title: "Áo sơ mi",
+        aos: "zoom-in-right",
         color: img1,
         span: 14,
         
@@ -17,18 +17,18 @@ export const featured = [
     {
         id: 2,
         image: "https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/product/category-coats-2-colour-bg-2.jpg",
-        text: "Get ready for winter",
-        title: "Coats",
-        path: "/",
+        text: "Sẵn sàng cho mùa đông",
+        title: "Áo khoác",
+        aos: "zoom-in-left",
         color: img2,
         span: 10,
     },
     {
         id: 3,
         image: "https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/product/category-dresses-2-colour-bg-2.jpg",
-        text: "let yourself shine",
-        title: "Dresses",
-        path: "/",
+        text: "Tỏa sáng bản thân",
+        title: "Váy",
+        aos: "zoom-in-right",
         color: img3,
         span: 9,
     },
@@ -36,9 +36,9 @@ export const featured = [
     {
         id: 4,
         image: "https://d19m59y37dris4.cloudfront.net/varkala/2-1/img/product/category-jeans-colour-bg-2.jpg",
-        text: "Latest denim trends",
-        title: "Jeans",
-        path: "/",
+        text: "Chạy theo xu hướng",
+        title: "Quần bò Jeans",
+        aos: "zoom-in-left",
         color: img4,
         span: 15,
     },

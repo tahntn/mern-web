@@ -1,9 +1,10 @@
-import { AudioOutlined, SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Tooltip } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button } from "antd";
+
 import "./SearchComponent.scss";
 
 const SeacrhComponent = (props) => {
-  const { width, textColor, styleDiv, onChange,onClick, ...rest }= props;
+  const { textColor, styleDiv,onClick, ...rest }= props;
 
   return (
     <div
@@ -21,7 +22,7 @@ const SeacrhComponent = (props) => {
             : "placeholder-white text-white text-base bg-transparent pl-2 w-full"
         }
         placeholder="Tìm kiếm ... "
-       {...props}
+       {...rest}
       />
       <div>
         <Button type="link" onClick={onClick}>

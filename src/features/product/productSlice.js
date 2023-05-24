@@ -8,21 +8,43 @@ const initialState= {
     loading: false,
     error: null,
     messageCRUD: null,
+    
+    search: "",
+    filterProduct: null,
+    arrivalsProduct: null,
+    isLoading: false,
+
 }
 
 const productSlice =  createSlice({
     name: "product",
     initialState,
     reducers: {
+        searchProduct: (state, action) => {
+            state.search = action.payload
+        },
         setSearchProduct: (state, action)=> {
             state.searchProduct = action.payload;
         },
         resetSearchProduct: (state) => {
             state.resultProduct = []
         },
-        setMessage: (state)=> {
+        setMessage: (state, action)=> {
             state.messageCRUD = null
+        },
+        setAllProducts: (state, action) => {
+            state.allProducts = action.payload;
+        },
+        setFilterProduct: (state, action) => {
+            state.filterProduct = action.payload;
+        },
+        setArrivalsProduct: (state, action) => {
+            state.arrivalsProduct = action.payload;
+        },
+        setIsLoading: (state, action) => {
+            state.isLoading = action.payload
         }
+    
     },
     extraReducers(builer) {
         builer
@@ -74,7 +96,7 @@ const productSlice =  createSlice({
         //     state.loading = true;
         // })
         // .addCase(searchProductByName.rejected, (state, action) => {
-        //     state.error = action;
+        //     state.error = action;fil
         //     state.loading = false;
         // })
         // .addCase(searchProductByName.fulfilled, (state, action) => {
@@ -85,6 +107,6 @@ const productSlice =  createSlice({
     }
 })
 
-export const { setSearchProduct, setMessage} = productSlice.actions
+export const { setSearchProduct, setMessage,    searchProduct, setAllProducts, setFilterProduct, setIsLoading} = productSlice.actions
 
 export default productSlice.reducer;

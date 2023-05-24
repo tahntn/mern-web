@@ -6,14 +6,19 @@ import FeaturedComponent from "../../component/FeaturedComponent/FeaturedCompone
 import NewArrivalsComponent from "../../component/NewArrivalsComponent/NewArrivalsComponent";
 import ServiceComponent from "../../component/ServiceComponent/ServiceComponent";
 import SliderComponent from "../../component/SliderComponent/SliderComponent";
-
+import { Divider } from 'antd';
 const HomePage = () => {
     return (
         <div>
         <SliderComponent sliders={sliders}/>
         <FeaturedComponent featured={featured}/>
+        <Divider/>
         <NewArrivalsComponent/>
+        <Divider/>
+        <div className="spacingPage">
+
         <ServiceComponent/>
+        </div>
         </div>
     )
 }

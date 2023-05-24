@@ -14,7 +14,7 @@ const ButtonComponent = ({size, styleButton, styleTextButton,textButton,disabled
 
     
     >
-      {textButton}
+       <span style={styleTextButton}>{textButton}</span>
     </Button>
   );
 };

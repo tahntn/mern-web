@@ -1,53 +1,90 @@
 import { Col, Row, Space } from "antd";
-import logo from "../../assets/images/logo (5).png";
+import logo from "../../assets/images/logoWhite.png";
 import ButtonComponent from "../ButtonComponent/ButtonComponent";
 import InputComponent from "../InputComponent/InputComponent";
-
+import { FacebookFilled } from "@ant-design/icons";
+import gmail from "../../assets/images/gmail.png";
+import facebook from "../../assets/images/facebook.png";
+import phone from "../../assets/images/phone-call.png";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 const FooterComponent = () => {
+  const navigate = useNavigate();
+  const { access_token } = useSelector((state) => state.auth);
+
   return (
     <div className="bg-black text-white footer">
       <Row className="py-20 mx-10">
-        <Col span={9}>
-          <div className="w-2/4">
-            <img src={logo} alt="logo" className="w-full h-full" />
-          </div>
-          <div className="ml-10 mt-10">
-            <p className="mb-5 text-2xl">Can we help you?</p>
+      <Col xl={2} className="xl:block sm:hidden xs:hidden"></Col>
+        <Col xl={7} lg={9} sm={24} xs={24} >
+          <Row className="items-center">
+            <Col xl={16} lg={16} md={6} sm={5} xs={6}> 
+              <img src={logo} alt="logo" className="w-full h-full" />
+            </Col>
+            <Col lg={2} sm={2} className="sm:block xl:hidden  xs:hidden"></Col>
+            <Col xl={24} lg={24} md={16} sm={17} xs={23}>
+            <p className="mb-5 text-2xl">Chúng tôi có thể giúp gì cho bạn?</p>
             <div>
               <InputComponent
-                placeholder="Your email adress"
+                placeholder="Địa chỉ email"
                 style={{ fontSize: "20px", color: "black" }}
               />
               <ButtonComponent
-                textButton={"Subscribe now"}
+                textButton={"Đăng ký ngay"}
+                styleTextButton={{
+                  color: "white",
+                }}
                 className="mt-5 text-white"
               />
             </div>
-          </div>
+            </Col>
+          </Row>
+         
         </Col>
-        <Col span={12} offset={2}>
+        <Col xl={2} lg={1} className="lg:block sm:hidden xs:hidden"></Col>
+        <Col xl={12} lg={14} sm={24} xs={24} className="sm:pt-10 xs:pt-10 lg:mt-0" >
           <Row>
-            <Col span={8}>
-              <p className=" text-2xl font-bold mb-8">Shop</p>
-              <h3 className="text-base mb-3">For Women</h3>
-              <h3 className="text-base mb-3">For Men</h3>
-              <h3 className="text-base mb-3">Stores</h3>
-              <h3 className="text-base mb-3">Our Blog</h3>
-              <h3 className="text-base mb-3">Shop</h3>
+            <Col sm={!access_token ? 12 : 8} xs={12}>
+              <p className=" md:text-2xl sm:text-xl font-bold mb-8">Cửa hàng</p>
+              <h3 className="md:text-base sm:text-sm mb-3">Trang chủ</h3>
+              <h3 className="md:text-base sm:text-sm mb-3">Sản phẩm</h3>
+              <h3 className="md:text-base sm:text-sm mb-3">Liên hệ</h3>
+              {access_token && (
+                <>
+                  <h3 className="md:text-base sm:text-sm mb-3">Giỏ hàng của bạn</h3>
+                  <h3 className="md:text-base sm:text-sm mb-3">Đơn hàng của bạn</h3>
+                </>
+              )}
             </Col>
-            <Col span={8}>
-              <p className=" text-2xl font-bold mb-8">Company</p>
-              <h3 className="text-base mb-3">Login</h3>
-              <h3 className="text-base mb-3">Cart</h3>
-              <h3 className="text-base mb-3">Our Product</h3>
-              <h3 className="text-base mb-3">Checkout</h3>
-            </Col>
-            <Col span={8}>
-              <p className=" text-2xl font-bold mb-8">Your Accout</p>
-              <h3 className="text-base mb-3">Checkout</h3>
-              <h3 className="text-base mb-3">Checkout</h3>
-              <h3 className="text-base mb-3">Checkout</h3>
-              <h3 className="text-base mb-3">Checkout</h3>
+            {access_token && (
+              <Col sm={8} xs={12}>
+                <p className="md:text-2xl sm:text-xl font-bold mb-8">Tài khoản</p>
+                <h3 className="md:text-base sm:text-sm mb-3">Thông tin tài khoản</h3>
+                <h3 className="md:text-base sm:text-sm mb-3">Giỏ hàng của bạn</h3>
+                <h3 className="md:text-base sm:text-sm mb-3">Đơn hàng của bạn</h3>
+                {/* <h3 className="md:text-base sm:text-sm mb-3">Checkout</h3> */}
+              </Col>
+            )}
+            <Col sm={!access_token ? 12 : 8} xs={12} className={access_token && "xs:pt-5"}>
+              <p className="md:text-2xl sm:text-xl font-bold mb-8">Liên hệ</p>
+              <h3 className="md:text-base sm:text-sm mb-3 text-blue-700 flex">
+                <div className="w-6">
+                  <img src={facebook} alt="facebook" className="w-full" />
+                </div>
+                <span className="text-white pl-3">NO Store</span>
+              </h3>
+              <h3 className="md:text-base sm:text-sm mb-3 flex">
+                <div className="w-6">
+                  <img src={gmail} alt="gmail" className="w-full" />
+                </div>
+                <span className=" text-white pl-3">ntnhat@gmail.com</span>
+              </h3>
+              <h3 className="md:text-base sm:text-sm mb-3 flex">
+                <div className="w-6">
+                  <img src={phone} alt="phone" className="w-full" />
+                </div>
+                <span className="text-white pl-3">0943084519</span>
+              </h3>
             </Col>
           </Row>
         </Col>

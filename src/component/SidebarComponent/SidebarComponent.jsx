@@ -8,20 +8,20 @@ const SidebarComponent = () => {
   const [category, setCategory] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const getAllCategory = async () => {
+  // const getAllCategory = async () => {
     
-    const res = await axios.get(
-      `${process.env.REACT_APP_API_URL}/category/get-alls-category`
-    );
+  //   const res = await axios.get(
+  //     `${process.env.REACT_APP_API_URL}/category/get-alls-category`
+  //   );
  
-    setCategory(res.data.data);
+  //   setCategory(res.data.data);
     
-  };
-  useEffect(() => {
-    setIsLoading(true);
-    getAllCategory();
-    setIsLoading(false);
-  }, []);
+  // };
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   getAllCategory();
+  //   setIsLoading(false);
+  // }, []);
 
 
   const renderContent = (type, options) => {
@@ -29,9 +29,9 @@ const SidebarComponent = () => {
       case "text":
         return (
           <div className="flex flex-col">
-            {options.map((option) => {
+            {/* {options.map((option) => {
               return <span key={option.name}>{option.name}</span>;
-            })}
+            })} */}
           </div>
         );
       case "checkbox":
@@ -74,15 +74,9 @@ const SidebarComponent = () => {
         <>
         <Row>
           <label className="text-black">Danh mục sản phẩm</label>
-          {renderContent("checkbox", category)}
+          {/* {renderContent("checkbox", category)} */}
         </Row>
-        <div>
-          <label className="text-black">Dành cho</label>
-          {renderContent("checkbox", gender)}
-        </div>
-        <div>
-         <label className="text-black">Dành cho</label>
-        </div>
+       
         </>
 
 )}
