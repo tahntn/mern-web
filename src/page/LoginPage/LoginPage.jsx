@@ -22,17 +22,16 @@ function LoginPage() {
 
   const mutation = useMutationHooks((data) => UserService.loginUser(data));
   const { data, isSuccess } = mutation;
-
+  console.log(data, isSuccess);
   const handleGetDetailsUser = async (id, token) => {
-    const storage = localStorage.getItem('refresh_token')
-    const refreshToken = JSON.parse(storage)
     const res = await UserService.getDetailsUser(id, token)
-    dispatch(updateUser1({ ...res?.data, access_token: token, refreshToken }))
+    dispatch(updateUser1({ ...res?.data, access_token: token }))
   }
 
   useEffect(() => {
+    console.log("1");
     if(isSuccess && data?.status !== "ERROR") {
-      
+      console.log("2");
      if(location?.state && data?.data?.role === "false"){
        navigate(location?.state)
        MessSuccess("Chào mừng đến trang chủ")
