@@ -10,7 +10,7 @@ import InputComponent from "../../component/InputComponent/InputComponent";
 import { useMutationHooks } from "../../hooks/useMutationHook";
 import { useLocation, useNavigate } from "react-router-dom";
 import { convertPrice } from "../../utils";
-import { PayPalButton } from "react-paypal-button-v2";
+// import { PayPalButton } from "react-paypal-button-v2";
 import {
   error as MessError,
   success as MessSuccess,
@@ -282,25 +282,25 @@ const PaymentPage = () => {
     setPayment(e.target.value);
   };
 
-  const addPaypalScript = async () => {
-    const { data } = await PaymentService.getConfig();
-    const script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = `https://www.paypal.com/sdk/js?client-id=${data}&disable-funding=card`;
-    script.async = true;
-    script.onload = () => {
-      setSdkReady(true);
-    };
-    document.body.appendChild(script);
-  };
+  // const addPaypalScript = async () => {
+  //   const { data } = await PaymentService.getConfig();
+  //   const script = document.createElement("script");
+  //   script.type = "text/javascript";
+  //   script.src = `https://www.paypal.com/sdk/js?client-id=${data}&disable-funding=card`;
+  //   script.async = true;
+  //   script.onload = () => {
+  //     setSdkReady(true);
+  //   };
+  //   document.body.appendChild(script);
+  // };
 
-  useEffect(() => {
-    if (!window.paypal) {
-      addPaypalScript();
-    } else {
-      setSdkReady(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!window.paypal) {
+  //     addPaypalScript();
+  //   } else {
+  //     setSdkReady(true);
+  //   }
+  // }, []);
 
   return (
     <>
@@ -520,7 +520,7 @@ const PaymentPage = () => {
                     </span>
                   </div>
                 </div>
-                {payment === "paypal" && sdkReady ? (
+                {/* {payment === "paypal" && sdkReady ? (
                   <>
                     <div style={{ width: "320px" }}>
                       <PayPalButton
@@ -534,7 +534,7 @@ const PaymentPage = () => {
                       />
                     </div>
                   </>
-                ) : (
+                ) : ( */}
                   <ButtonComponent
                     onClick={() => handleAddOrder()}
                     size={40}
@@ -552,7 +552,7 @@ const PaymentPage = () => {
                       fontWeight: "700",
                     }}
                   ></ButtonComponent>
-                )}
+                {/* )} */}
               </Col>
             </Row>
           </div>
