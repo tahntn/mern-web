@@ -29,9 +29,7 @@ function LoginPage() {
   }
 
   useEffect(() => {
-    console.log("1");
     if(isSuccess && data?.status !== "ERROR") {
-      console.log("2");
      if(location?.state && data?.data?.role === "false"){
        navigate(location?.state)
        MessSuccess("Chào mừng đến trang chủ")
